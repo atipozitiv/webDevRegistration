@@ -4,6 +4,9 @@ import bcrypt from "bcrypt";
 interface IUser {
   username: string;
   password: string;
+  name: string;
+  surname: string;
+  role: string
 }
 
 interface IUserMethods {
@@ -22,23 +25,26 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>({
     type: String,
     required: true,
   },
+  name: {
+    type: String,
+    required: true,
+  },
+  surname: {
+    type: String,
+    required: true,
+  },
+  role: {
+    type: String,
+    required: true,
+  }
 });
 
 userSchema.pre("save", async function (next) {
-  // Если пароль не изменен, переходим к следующему middleware
   if (!this.isModified("password")) return next();
-
   try {
-    // Генерация соли
     const salt = await bcrypt.genSalt(10);
-
-    // Хеширование пароля
     const hash = await bcrypt.hash(this.password, salt);
-
-    // Заменяем пароль на хеш
     this.password = hash;
-
-    // Переходим к следующему middleware
     next();
   } catch (err) {
     return next(err as CallbackError);

@@ -9,4 +9,4 @@ router.post("/signin", authController.login);
 router.get("/me", authenticateJWT, authController.getInfo);
 router.delete("/del", authenticateJWT, authController.del);
 
-export const authRoutes = router;
+export const authRoutes = router;   
