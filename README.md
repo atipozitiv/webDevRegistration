@@ -1,5 +1,6 @@
 # Для запуска
 ## Установка зависимостей:
+- npm install 
 - yarn add express
 - yarn add -D typescript @types/node @types/express
 - yarn add -D ts-node
