@@ -1,4 +1,4 @@
-import { CallbackError, Int32, model, Model, Schema } from "mongoose";
+import { CallbackError, Int32, model, Model, Schema, SchemaType, SchemaTypes } from "mongoose";
 import bcrypt from "bcrypt";
 import slugify from 'slugify';
 
@@ -8,11 +8,11 @@ interface ICourse {
   slug: string;
   description: string;
   price: number;
-  image: ;
+  image: {data:Storage, contentType: String};
   category: string;
   level: string;
   published: boolean;
-  author: //SchemaTypeObject.. ;
+  author: {type: Schema.Types.ObjectId, ref: 'UserModel'};
   createdAt: Date 
 }
 
@@ -25,7 +25,7 @@ const courseSchema = new Schema<ICourse, CourseModel>({
   },
   slug: {
     type: String,
-    required: true
+    required: false
   },
   description: {
     type: String
@@ -35,7 +35,7 @@ const courseSchema = new Schema<ICourse, CourseModel>({
     required: true
   },
   image: {
-    type: ,
+    type: {data:Storage, contentType: String},
     required: true
   },
   category: {
@@ -51,7 +51,7 @@ const courseSchema = new Schema<ICourse, CourseModel>({
     default: false
   },
   author: {
-    type: ,
+    type: {type: Schema.Types.ObjectId, ref: 'UserModel'},
     required: true
   },
   createdAt: {
