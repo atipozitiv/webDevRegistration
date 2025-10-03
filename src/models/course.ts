@@ -1,71 +1,83 @@
-import { CallbackError, Int32, model, Model, Schema, SchemaType, SchemaTypes } from "mongoose";
-import bcrypt from "bcrypt";
-import slugify from 'slugify';
+import { model, Schema, Types } from "mongoose";
+import slugify from "slugify";
 
-
-interface ICourse {
+export interface ICourse {
   title: string;
   slug: string;
-  description: string;
+  description?: string;
   price: number;
-  image: {data:Storage, contentType: String};
+  image: string;
   category: string;
-  level: string;
+  level: "beginner" | "intermediate" | "advanced";
   published: boolean;
-  author: {type: Schema.Types.ObjectId, ref: 'UserModel'};
-  createdAt: Date 
+  author: Types.ObjectId;
+  tags: Types.ObjectId[];
+  favorites: Types.ObjectId[];
+  createdAt: Date;
 }
 
-type CourseModel = Model<ICourse, object>;
-
-const courseSchema = new Schema<ICourse, CourseModel>({
+const courseSchema = new Schema<ICourse>({
   title: {
     type: String,
-    required: true
+    required: true,
+    trim: true,
   },
   slug: {
     type: String,
-    required: false
+    required: true,
+    unique: true,
   },
   description: {
-    type: String
+    type: String,
   },
   price: {
     type: Number,
-    required: true
+    required: true,
+    min: 0,
   },
   image: {
-    type: {data:Storage, contentType: String},
-    required: true
+    type: String,
+    required: true,
   },
   category: {
     type: String,
-    required: true
+    required: true,
   },
   level: {
     type: String,
-    default: "beginner"
+    enum: ["beginner", "intermediate", "advanced"],
+    default: "beginner",
+    required: true,
   },
   published: {
     type: Boolean,
-    default: false
+    default: false,
   },
   author: {
-    type: {type: Schema.Types.ObjectId, ref: 'UserModel'},
-    required: true
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
   },
+  tags: [{
+    type: Schema.Types.ObjectId,
+    ref: "Tag",
+  }],
+  favorites: [{
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  }],
   createdAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+    required: true,
+  },
 });
 
-courseSchema.pre('validate', function(next) {
-  if(this.title) {
-      this.slug = slugify(this.title, { lower: true,
-      strict: true})
+courseSchema.pre("save", function (next) {
+  if (this.isModified("title")) {
+    this.slug = slugify(this.title, { lower: true, strict: true });
   }
-  next()
-})
+  next();
+});
 
-export const CourseModel = model<ICourse, CourseModel>("Course", courseSchema);
+export const CourseModel = model<ICourse>("Course", courseSchema);

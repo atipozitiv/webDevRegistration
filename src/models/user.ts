@@ -6,7 +6,8 @@ interface IUser {
   password: string;
   name: string;
   surname: string;
-  role: string
+  role: string;
+  favoriteCourses: Schema.Types.ObjectId[];
 }
 
 interface IUserMethods {
@@ -36,7 +37,11 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>({
   role: {
     type: String,
     required: true,
-  }
+  },
+  favoriteCourses: [{
+    type: Schema.Types.ObjectId,
+    ref: "Course",
+  }],
 });
 
 userSchema.pre("save", async function (next) {
