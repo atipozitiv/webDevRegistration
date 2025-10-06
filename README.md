@@ -21,36 +21,19 @@
 
 
 
-## Вот несколько шаблонов для тестов:
-POST /api/auth/signup (создать пользователя)
-{
-  "username": "myLogin",
-  "password": "myPass111",
-  "name": "Илья",
-  "surname": "Игорев",
-  "role": "teacher"
-}
+## Вот несколько шаблонов для тестов новых моделей:  
+POST /api/lessons создать урок (нужен токен)  
+{  
+  "title": "Введение в swift",  
+  "content": "В этом уроке мы познакомимся с основами языка swift",  
+  "course": "68dfed4ec9fca7f8df69d403",  (id курса)  
+  "order": 1  
+}  
 
 -------------------
 
-POST /api/courses (создать курс)(нужен токен, т.к. курс создает пользователь)
-{
-  "title": "Мобильная разработка",
-  "description": "Изучение мобильной разработки",
-  "price": 777,
-  "category": "programming",
-  "level": "beginner",
-  "published": true,
-  "tags": "[\"mobile\", \"android\", \"ios\"]",
-  "imageUrl": "https://i.pinimg.com/736x/34/36/87/3436874588a193cbe1f0b7f928053ab3.jpg"
-}
-
-------------------
-
-POST /api/courses/{id курса} (добавить курс в избранное)(нужен токен)
-
-------------------
-
-GET /api/courses (получить курсы)
-параметры для пагинации, сортировки и фильтрации:
-?page=1&limit=10&sort=-createdAt&category=programming&level=beginner&published=true&minPrice=0&maxPrice=1000&tags=javascript,web&
+POST /api/comments добавить комментарий (нужен токен)  
+{  
+  "lesson": "68e3997ac32a1adca4df81da", (id урока)  
+  "text": "Урок во! Скибиди доб ес ес"  
+}  
