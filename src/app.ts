@@ -5,6 +5,7 @@ import { authRoutes } from "./routes/authRoutes";
 import { courseRoutes } from "./routes/courseRoutes";
 import { lessonRoutes } from "./routes/lessonRoutes";
 import { commentRoutes } from "./routes/commentRoutes";
+import { enrollmentRoutes } from "./routes/enrollmentRoutes";
 import path from "path";
 
 dotenv.config();
@@ -20,6 +21,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api/lessons", lessonRoutes);
 app.use("/api/comments", commentRoutes);
+app.use("/api/enrollments", enrollmentRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

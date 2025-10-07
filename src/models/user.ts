@@ -8,6 +8,7 @@ interface IUser {
   surname: string;
   role: string;
   favoriteCourses: Schema.Types.ObjectId[];
+  enrollments: Schema.Types.ObjectId[];
 }
 
 interface IUserMethods {
@@ -41,6 +42,10 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>({
   favoriteCourses: [{
     type: Schema.Types.ObjectId,
     ref: "Course",
+  }],
+  enrollments: [{
+    type: Schema.Types.ObjectId,
+    ref: "Enrollment",
   }],
 });
 

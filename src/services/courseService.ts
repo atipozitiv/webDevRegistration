@@ -1,6 +1,7 @@
 import { CourseModel, ICourse } from "../models/course";
 import { TagModel } from "../models/tag";
 import { UserModel } from "../models/user";
+import { EnrollmentModel } from "../models/enrollment";
 import { Types } from "mongoose";
 
 interface CourseFilters {
@@ -141,6 +142,12 @@ export const courseService = {
   },
 
   async deleteCourse(id: string) {
+    const { enrollmentService } = require("./enrollmentService");
+    await EnrollmentModel.deleteMany({ course: new Types.ObjectId(id) });
+
+    const { lessonService } = require("./lessonService");
+    await lessonService.deleteLessonsByCourse(id);
+
     return await CourseModel.findByIdAndDelete(id);
   },
 
