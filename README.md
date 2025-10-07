@@ -22,18 +22,26 @@
 
 
 ## Вот несколько шаблонов для тестов новых моделей:  
-POST /api/lessons создать урок (нужен токен)  
-{  
-  "title": "Введение в swift",  
-  "content": "В этом уроке мы познакомимся с основами языка swift",  
-  "course": "68dfed4ec9fca7f8df69d403",  (id курса)  
-  "order": 1  
-}  
 
--------------------
+POST /api/enrollments/courses/{id курса}/enroll    
+запись на курс, нужен токен
 
-POST /api/comments добавить комментарий (нужен токен)  
-{  
-  "lesson": "68e3997ac32a1adca4df81da", (id урока)  
-  "text": "Урок во! Скибиди доб ес ес"  
-}  
+-------------------------------
+
+POST /api/enrollments/lessons/{id урока}/complete    
+пройти урок, нужен токен
+
+-------------------------------
+
+DELETE /api/enrollments/lessons/{id урока}/complete    
+отменить прохождение урока, нужне токен
+
+-------------------------------
+
+GET /api/enrollments/courses/{id курса}/progress    
+узнать прогресс, нужен токен
+
+-------------------------------
+
+GET /api/enrollments/courses/{id курса}/enrollments/count    
+подсчет студентов записавшихся на курс
