@@ -6,12 +6,13 @@ dotenv.config({ path: path.resolve(__dirname, '../../../.env') });
 
 let channel: amqp.Channel | null = null;
 
-export async function connectRabbitMQ() {
+export async function connectRabbitMQ(): Promise<amqp.Channel | null> {
   try {
     const connection = await amqp.connect(process.env.RABBITMQ_URL!);
     channel = await connection.createChannel();
     await channel.assertQueue('enrollment_queue', { durable: true });
     console.log('Courses Service: Connected to RabbitMQ');
+    return channel;
   } catch (error) {
     console.error('Courses Service: RabbitMQ connection error:', error);
     throw error;

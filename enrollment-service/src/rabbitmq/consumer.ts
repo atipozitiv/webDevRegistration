@@ -5,7 +5,7 @@ import { enrollmentService } from '../services/enrollmentService';
 
 dotenv.config({ path: path.resolve(__dirname, '../../../.env') });
 
-let channel: amqp.Channel | null = null;
+export let channel: amqp.Channel | null = null;
 
 export async function connectRabbitMQ() {
   try {

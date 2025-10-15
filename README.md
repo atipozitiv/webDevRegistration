@@ -116,3 +116,12 @@ POST http://localhost:3000/api/courses/ Создать курс (нужен то
 -------------------------------
 
 POST http://localhost:3000/api/enrollments/courses/{id курса}/enroll Записаться на курс (нужен токен) 
+
+-------------------------------
+
+POST http://localhost:3000/api/enrollments/lessons/{id урока}/complete пройти урок
+```HTML
+{
+  "courseId": "{id курса}"
+}
+```
